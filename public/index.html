@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Socket.IO</title>
+  </head>
+  <body>
+    <h1 id="data"></h1>
+
+    <form>
+      <input type="text" id="input-data" placeholder="Enter data" />
+      <button type="submit">Send data</button>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+
+      // Nhận dữ liệu từ server
+      socket.on("server-send-data", (data) => {
+        document.getElementById("data").innerHTML = data;
+      });
+
+      // Gửi dữ liệu lên server
+      document.querySelector("form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const data = document.getElementById("input-data").value;
+        socket.emit("client-send-data", data);
+      });
+    </script>
+  </body>
+</html>
